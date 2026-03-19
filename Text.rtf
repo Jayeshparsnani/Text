@@ -1,176 +1,169 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2868
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
-{\colortbl;\red255\green255\blue255;}
-{\*\expandedcolortbl;;}
-\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+<div class="workitems-container">
+  <mat-tab-group>
 
-\f0\fs24 \cf0 <div class="workitems-container">\
-  <mat-tab-group>\
-\
-    <mat-tab label="Work Items">\
-      <div class="table-container">\
-        <table mat-table [dataSource]="[]" class="full-width">\
-\
-          <ng-container matColumnDef="taskId">\
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskId \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="taskName">\
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskName \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="origination">\
-            <th mat-header-cell *matHeaderCellDef>Origination</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.origination \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="creationDate">\
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.creationDate \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="status">\
-            <th mat-header-cell *matHeaderCellDef>Status</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.status \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="claim">\
-            <th mat-header-cell *matHeaderCellDef>Claim</th>\
-            <td mat-cell *matCellDef="let row">\
-              <button mat-raised-button class="claim-btn"\
-                      (click)="claimTask(row.taskId)">\
-                Claim\
-              </button>\
-            </td>\
-          </ng-container>\
-\
-          <tr mat-header-row *matHeaderRowDef="workColumns"></tr>\
-          <tr mat-row *matRowDef="let row; columns: workColumns;"></tr>\
-          <tr class="mat-row" *matNoDataRow>\
-            <td class="empty-state" [attr.colspan]="workColumns.length">\
-              No records found\
-            </td>\
-          </tr>\
-\
-        </table>\
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"\
-                       pageSize="8"\
-                       showFirstLastButtons>\
-        </mat-paginator>\
-      </div>\
-    </mat-tab>\
-\
-    <mat-tab label="My Work Items">\
-      <div class="table-container">\
-        <table mat-table [dataSource]="[]" class="full-width">\
-\
-          <ng-container matColumnDef="taskId">\
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskId \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="taskName">\
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskName \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="origination">\
-            <th mat-header-cell *matHeaderCellDef>Origination</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.origination \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="creationDate">\
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.creationDate \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="status">\
-            <th mat-header-cell *matHeaderCellDef>Status</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.status \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="action">\
-            <th mat-header-cell *matHeaderCellDef>Action</th>\
-            <td mat-cell *matCellDef="let row">\
-              <button mat-stroked-button class="unclaim-btn"\
-                      (click)="unclaimTask(row.taskId); $event.stopPropagation()">\
-                Unclaim\
-              </button>\
-            </td>\
-          </ng-container>\
-\
-          <tr mat-header-row *matHeaderRowDef="myColumns"></tr>\
-          <tr mat-row\
-              *matRowDef="let row; columns: myColumns;"\
-              class="clickable-row"\
-              (click)="openTask(row.taskId)">\
-          </tr>\
-          <tr class="mat-row" *matNoDataRow>\
-            <td class="empty-state" [attr.colspan]="myColumns.length">\
-              No records found\
-            </td>\
-          </tr>\
-\
-        </table>\
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"\
-                       pageSize="8"\
-                       showFirstLastButtons>\
-        </mat-paginator>\
-      </div>\
-    </mat-tab>\
-\
-    <mat-tab label="Cancelled">\
-      <div class="table-container">\
-        <table mat-table [dataSource]="[]" class="full-width">\
-\
-          <ng-container matColumnDef="taskId">\
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskId \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="taskName">\
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.taskName \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="origination">\
-            <th mat-header-cell *matHeaderCellDef>Origination</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.origination \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="creationDate">\
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.creationDate \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="status">\
-            <th mat-header-cell *matHeaderCellDef>Status</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.status \}\}</td>\
-          </ng-container>\
-\
-          <ng-container matColumnDef="assignedTo">\
-            <th mat-header-cell *matHeaderCellDef>Assigned To</th>\
-            <td mat-cell *matCellDef="let row">\{\{ row.assignedTo \}\}</td>\
-          </ng-container>\
-\
-          <tr mat-header-row *matHeaderRowDef="cancelledColumns"></tr>\
-          <tr mat-row *matRowDef="let row; columns: cancelledColumns;"></tr>\
-          <tr class="mat-row" *matNoDataRow>\
-            <td class="empty-state" [attr.colspan]="cancelledColumns.length">\
-              No records found\
-            </td>\
-          </tr>\
-\
-        </table>\
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"\
-                       pageSize="8"\
-                       showFirstLastButtons>\
-        </mat-paginator>\
-      </div>\
-    </mat-tab>\
-\
-  </mat-tab-group>\
-</div>}
+    <mat-tab label="Work Items">
+      <div class="table-container">
+        <table mat-table [dataSource]="[]" class="full-width">
+
+          <ng-container matColumnDef="taskId">
+            <th mat-header-cell *matHeaderCellDef>Task Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="taskName">
+            <th mat-header-cell *matHeaderCellDef>Task Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="origination">
+            <th mat-header-cell *matHeaderCellDef>Origination</th>
+            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="claim">
+            <th mat-header-cell *matHeaderCellDef>Claim</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-raised-button class="claim-btn"
+                      (click)="claimTask(row.taskId)">
+                Claim
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="workColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: workColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="empty-state" [attr.colspan]="workColumns.length">
+              No records found
+            </td>
+          </tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
+                       pageSize="8"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="My Work Items">
+      <div class="table-container">
+        <table mat-table [dataSource]="[]" class="full-width">
+
+          <ng-container matColumnDef="taskId">
+            <th mat-header-cell *matHeaderCellDef>Task Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="taskName">
+            <th mat-header-cell *matHeaderCellDef>Task Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="origination">
+            <th mat-header-cell *matHeaderCellDef>Origination</th>
+            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Action</th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-stroked-button class="unclaim-btn"
+                      (click)="unclaimTask(row.taskId); $event.stopPropagation()">
+                Unclaim
+              </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="myColumns"></tr>
+          <tr mat-row
+              *matRowDef="let row; columns: myColumns;"
+              class="clickable-row"
+              (click)="openTask(row.taskId)">
+          </tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="empty-state" [attr.colspan]="myColumns.length">
+              No records found
+            </td>
+          </tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
+                       pageSize="8"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Cancelled">
+      <div class="table-container">
+        <table mat-table [dataSource]="[]" class="full-width">
+
+          <ng-container matColumnDef="taskId">
+            <th mat-header-cell *matHeaderCellDef>Task Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="taskName">
+            <th mat-header-cell *matHeaderCellDef>Task Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="origination">
+            <th mat-header-cell *matHeaderCellDef>Origination</th>
+            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="assignedTo">
+            <th mat-header-cell *matHeaderCellDef>Assigned To</th>
+            <td mat-cell *matCellDef="let row">{{ row.assignedTo }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="cancelledColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: cancelledColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="empty-state" [attr.colspan]="cancelledColumns.length">
+              No records found
+            </td>
+          </tr>
+
+        </table>
+        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
+                       pageSize="8"
+                       showFirstLastButtons>
+        </mat-paginator>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+</div>
