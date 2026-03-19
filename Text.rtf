@@ -1,169 +1,76 @@
-<div class="workitems-container">
-  <mat-tab-group>
+.workitems-container {
+  padding: 16px 24px;
+}
 
-    <mat-tab label="Work Items">
-      <div class="table-container">
-        <table mat-table [dataSource]="[]" class="full-width">
+.table-container {
+  margin-top: 8px;
+  overflow: hidden;
+}
 
-          <ng-container matColumnDef="taskId">
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
-          </ng-container>
+.full-width {
+  width: 100%;
+}
 
-          <ng-container matColumnDef="taskName">
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
-          </ng-container>
+/* Header row - dark navy */
+::ng-deep .mat-mdc-header-row {
+  background-color: #1a2332 !important;
+}
 
-          <ng-container matColumnDef="origination">
-            <th mat-header-cell *matHeaderCellDef>Origination</th>
-            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
-          </ng-container>
+::ng-deep .mat-mdc-header-cell {
+  color: #ffffff !important;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+}
 
-          <ng-container matColumnDef="creationDate">
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
-          </ng-container>
+/* Alternating rows */
+::ng-deep .mat-mdc-row:nth-child(even) {
+  background-color: #f9f9f9;
+}
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-          </ng-container>
+::ng-deep .mat-mdc-row:hover {
+  background-color: #f0f7ff;
+}
 
-          <ng-container matColumnDef="claim">
-            <th mat-header-cell *matHeaderCellDef>Claim</th>
-            <td mat-cell *matCellDef="let row">
-              <button mat-raised-button class="claim-btn"
-                      (click)="claimTask(row.taskId)">
-                Claim
-              </button>
-            </td>
-          </ng-container>
+/* Claim button */
+.claim-btn {
+  background-color: #1a2332 !important;
+  color: #ffffff !important;
+  font-size: 12px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
 
-          <tr mat-header-row *matHeaderRowDef="workColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: workColumns;"></tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td class="empty-state" [attr.colspan]="workColumns.length">
-              No records found
-            </td>
-          </tr>
+/* Unclaim button */
+.unclaim-btn {
+  border-color: #E24B4A !important;
+  color: #A32D2D !important;
+  font-size: 12px !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
 
-        </table>
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
-                       pageSize="8"
-                       showFirstLastButtons>
-        </mat-paginator>
-      </div>
-    </mat-tab>
+/* Clickable row in My Work Items */
+.clickable-row {
+  cursor: pointer;
+}
 
-    <mat-tab label="My Work Items">
-      <div class="table-container">
-        <table mat-table [dataSource]="[]" class="full-width">
+/* Empty state */
+.empty-state {
+  padding: 48px !important;
+  text-align: center !important;
+  color: #888888 !important;
+  font-size: 13px !important;
+}
 
-          <ng-container matColumnDef="taskId">
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
-          </ng-container>
+/* Tab styling */
+::ng-deep .mat-mdc-tab-label-container {
+  border-bottom: 1px solid #e0e0e0;
+}
 
-          <ng-container matColumnDef="taskName">
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
-          </ng-container>
+::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: #1a2332 !important;
+}
 
-          <ng-container matColumnDef="origination">
-            <th mat-header-cell *matHeaderCellDef>Origination</th>
-            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="creationDate">
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Action</th>
-            <td mat-cell *matCellDef="let row">
-              <button mat-stroked-button class="unclaim-btn"
-                      (click)="unclaimTask(row.taskId); $event.stopPropagation()">
-                Unclaim
-              </button>
-            </td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="myColumns"></tr>
-          <tr mat-row
-              *matRowDef="let row; columns: myColumns;"
-              class="clickable-row"
-              (click)="openTask(row.taskId)">
-          </tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td class="empty-state" [attr.colspan]="myColumns.length">
-              No records found
-            </td>
-          </tr>
-
-        </table>
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
-                       pageSize="8"
-                       showFirstLastButtons>
-        </mat-paginator>
-      </div>
-    </mat-tab>
-
-    <mat-tab label="Cancelled">
-      <div class="table-container">
-        <table mat-table [dataSource]="[]" class="full-width">
-
-          <ng-container matColumnDef="taskId">
-            <th mat-header-cell *matHeaderCellDef>Task Id</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskId }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="taskName">
-            <th mat-header-cell *matHeaderCellDef>Task Name</th>
-            <td mat-cell *matCellDef="let row">{{ row.taskName }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="origination">
-            <th mat-header-cell *matHeaderCellDef>Origination</th>
-            <td mat-cell *matCellDef="let row">{{ row.origination }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="creationDate">
-            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
-            <td mat-cell *matCellDef="let row">{{ row.creationDate }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let row">{{ row.status }}</td>
-          </ng-container>
-
-          <ng-container matColumnDef="assignedTo">
-            <th mat-header-cell *matHeaderCellDef>Assigned To</th>
-            <td mat-cell *matCellDef="let row">{{ row.assignedTo }}</td>
-          </ng-container>
-
-          <tr mat-header-row *matHeaderRowDef="cancelledColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: cancelledColumns;"></tr>
-          <tr class="mat-row" *matNoDataRow>
-            <td class="empty-state" [attr.colspan]="cancelledColumns.length">
-              No records found
-            </td>
-          </tr>
-
-        </table>
-        <mat-paginator [pageSizeOptions]="[8, 15, 25]"
-                       pageSize="8"
-                       showFirstLastButtons>
-        </mat-paginator>
-      </div>
-    </mat-tab>
-
-  </mat-tab-group>
-</div>
+::ng-deep .mat-mdc-tab-indicator__content--underline {
+  border-color: #1a2332 !important;
+}
