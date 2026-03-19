@@ -1,76 +1,63 @@
-.workitems-container {
-  padding: 16px 24px;
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+export interface WorkItem {
+  taskId:      string;
+  taskName:    string;
+  origination: string;
+  creationDate: string;
+  status:      string;
+  assignedTo?: string;
 }
 
-.table-container {
-  margin-top: 8px;
-  overflow: hidden;
-}
+@Component({
+  selector: 'app-workitems',
+  templateUrl: './workitems.component.html',
+  styleUrls: ['./workitems.component.css']
+})
+export class WorkitemsComponent {
 
-.full-width {
-  width: 100%;
-}
+  workColumns      = ['taskId', 'taskName', 'origination', 'creationDate', 'status', 'claim'];
+  myColumns        = ['taskId', 'taskName', 'origination', 'creationDate', 'status', 'action'];
+  cancelledColumns = ['taskId', 'taskName', 'origination', 'creationDate', 'status', 'assignedTo'];
 
-/* Header row - dark navy */
-::ng-deep .mat-mdc-header-row {
-  background-color: #1a2332 !important;
-}
+  // ── Dummy data ──────────────────────────────────────────
+  workItems: WorkItem[] = [
+    { taskId: 'TSK-0041', taskName: 'Validate customer request', origination: 'Customer Portal', creationDate: '2026-03-19 09:14', status: 'Pending' },
+    { taskId: 'TSK-0042', taskName: 'Validate customer request', origination: 'Customer Portal', creationDate: '2026-03-19 09:32', status: 'Pending' },
+    { taskId: 'TSK-0043', taskName: 'Validate customer request', origination: 'API',             creationDate: '2026-03-19 10:05', status: 'Pending' },
+    { taskId: 'TSK-0044', taskName: 'Validate customer request', origination: 'Customer Portal', creationDate: '2026-03-19 10:22', status: 'Pending' },
+    { taskId: 'TSK-0045', taskName: 'Validate customer request', origination: 'API',             creationDate: '2026-03-19 11:00', status: 'Pending' },
+  ];
 
-::ng-deep .mat-mdc-header-cell {
-  color: #ffffff !important;
-  font-weight: 500 !important;
-  font-size: 12px !important;
-}
+  myItems: WorkItem[] = [];
 
-/* Alternating rows */
-::ng-deep .mat-mdc-row:nth-child(even) {
-  background-color: #f9f9f9;
-}
+  cancelledItems: WorkItem[] = [
+    { taskId: 'TSK-0030', taskName: 'Validate customer request', origination: 'Customer Portal', creationDate: '2026-03-18 14:00', status: 'Cancelled', assignedTo: 'Validator 1' },
+    { taskId: 'TSK-0031', taskName: 'Validate customer request', origination: 'Customer Portal', creationDate: '2026-03-18 15:30', status: 'Cancelled', assignedTo: 'Validator 3' },
+  ];
 
-::ng-deep .mat-mdc-row:hover {
-  background-color: #f0f7ff;
-}
+  constructor(private router: Router) {}
 
-/* Claim button */
-.claim-btn {
-  background-color: #1a2332 !important;
-  color: #ffffff !important;
-  font-size: 12px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-}
+  claimTask(taskId: string) {
+    const idx = this.workItems.findIndex(t => t.taskId === taskId);
+    if (idx === -1) return;
+    const task = { ...this.workItems[idx], status: 'In Progress' };
+    this.workItems.splice(idx, 1);
+    this.workItems = [...this.workItems]; // refresh table
+    this.myItems   = [...this.myItems, task];
+  }
 
-/* Unclaim button */
-.unclaim-btn {
-  border-color: #E24B4A !important;
-  color: #A32D2D !important;
-  font-size: 12px !important;
-  height: 32px !important;
-  line-height: 32px !important;
-}
+  unclaimTask(taskId: string) {
+    const idx = this.myItems.findIndex(t => t.taskId === taskId);
+    if (idx === -1) return;
+    const task = { ...this.myItems[idx], status: 'Pending' };
+    this.myItems.splice(idx, 1);
+    this.myItems   = [...this.myItems]; // refresh table
+    this.workItems = [task, ...this.workItems];
+  }
 
-/* Clickable row in My Work Items */
-.clickable-row {
-  cursor: pointer;
-}
-
-/* Empty state */
-.empty-state {
-  padding: 48px !important;
-  text-align: center !important;
-  color: #888888 !important;
-  font-size: 13px !important;
-}
-
-/* Tab styling */
-::ng-deep .mat-mdc-tab-label-container {
-  border-bottom: 1px solid #e0e0e0;
-}
-
-::ng-deep .mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
-  color: #1a2332 !important;
-}
-
-::ng-deep .mat-mdc-tab-indicator__content--underline {
-  border-color: #1a2332 !important;
+  openTask(taskId: string) {
+    this.router.navigate(['/task', taskId]);
+  }
 }
